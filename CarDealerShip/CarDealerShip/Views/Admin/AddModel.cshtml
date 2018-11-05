@@ -1,0 +1,61 @@
+﻿@model CarDealerShip.Models.AdminAddModelVM
+@{
+    ViewBag.Title = "AddModel";
+}
+
+<div class="row">
+    <h2>Models</h2>
+</div>
+@using (Html.BeginForm("AddModel", "Admin", FormMethod.Post))
+{
+    <div class="row">
+        <input type="hidden" name="Model.DateAdded" value="@DateTime.Now" />
+        <input type="hidden" name="Model.AdminUserId" value="@User.Identity.Name" />
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Model.ModelName)
+            @Html.TextBoxFor(m => m.Model.ModelName, new { @class="form-control"})            
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Makes)
+            @Html.DropDownListFor(m => m.Model.MakeId, Model.Makes.Select(item => new SelectListItem {Text = item.MakeName, Value = item.MakeId.ToString() }), new { @class = "form-control" })
+            
+        </div>
+
+        <div class="col-md-4">
+            <button class="btn btn-primary">Save</button>
+        </div>
+
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Date Added</th>
+                    <th>User</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Models.Any())
+                {
+                    foreach (var m in Model.Models)
+                    {
+                        <tr>
+                            <td>@Model.Makes.Where(ma=>ma.MakeId == m.MakeId).First().MakeName</td>
+                            <td>@m.ModelName</td>
+                            <td>@m.DateAdded</td>
+                            <td>@m.AdminUserId</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+

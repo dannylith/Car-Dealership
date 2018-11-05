@@ -1,0 +1,47 @@
+﻿@model List<CarDealerShip.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Users";
+}
+
+<div class="row">
+    <h2>Users</h2>
+    <a href="/Admin/AddUser">Add a new User</a>
+</div>
+
+<div class="row">
+    <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var u in Model)
+                    {
+                        <tr>
+                            <td>@u.LastName</td>
+                            <td>@u.FirstName</td>
+                            <td>@u.Email</td>
+                            <td>@(u.Roles.FirstOrDefault() == null ? "" : u.Roles.FirstOrDefault().RoleId == "1" ? "Admin": "Salesman")</td>
+                            <td>
+                                @if (u.Id != "00000000-0000-0000-0000-000000000000")
+                                {
+                                    @Html.ActionLink("Edit", "EditUser", "Admin", new { id = u.Id }, new { @class = "btn btn-primary" })
+                                }
+
+                                @*<a href="/Admin/EditUser/@u.Email" class="btn btn-primary">Edit</a>*@
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+</div>

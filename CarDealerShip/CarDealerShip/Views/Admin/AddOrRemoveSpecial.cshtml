@@ -1,0 +1,50 @@
+﻿@model CarDealerShip.Models.AdminAddOrRemoveSpecialVM
+@{
+    ViewBag.Title = "AddOrRemoveSpecial";
+}
+
+<div class="row">
+    <h2>Specials</h2>
+    <hr />
+</div>
+
+@using (Html.BeginForm("AddOrRemoveSpecial","Admin", FormMethod.Post))
+{
+    <div class="row">
+        @Html.ValidationSummary()
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Special.SpecialTitle, "Title")
+                @Html.TextBoxFor(m => m.Special.SpecialTitle, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Special.SpecialDesc, "Description")
+                @Html.TextAreaFor(m => m.Special.SpecialDesc, new { @class = "form-control" })
+                <button>Save</button>
+            </div>
+        </div>
+    </div>
+
+}
+<br /><br />
+<div class="row">
+    @foreach (var s in Model.Specials)
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <img src="http://www.printable-alphabets.com/wp-content/uploads/2012/12/print-dollar-sign-large.png" width="128" height="128" />
+            </div>
+            <div class="col-md-8">
+                <strong><p>@s.SpecialTitle</p></strong>
+                <br />
+                <p>@s.SpecialDesc</p>
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Delete","RemoveSpecial", "Admin",new { id = s.SpecialId},new { @class="btn btn-danger"})
+            </div>
+        </div>
+        <br />
+    }
+</div>

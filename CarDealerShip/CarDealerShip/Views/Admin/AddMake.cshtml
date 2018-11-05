@@ -1,0 +1,50 @@
+﻿@model CarDealerShip.Models.AdminAddMakeVM
+@{
+    ViewBag.Title = "AddMakes";
+}
+
+
+<div class="row">
+    <h2>Makes</h2>
+</div>
+@using (Html.BeginForm("AddMake", "Admin",FormMethod.Post))
+{
+    <div class="row">
+        <input type="hidden" name="Make.DateAdded" value="@DateTime.Now" />
+        <input type="hidden" name="Make.AdminUserId" value="@User.Identity.Name" />
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Make.MakeName)
+            @Html.TextBoxFor(m => m.Make.MakeName)
+            <button>Save</button>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Date Added</th>
+                    <th>User</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Makes.Any())
+                {
+                    foreach (var m in Model.Makes)
+                    {
+                        <tr>
+                            <td>@m.MakeName</td>
+                            <td>@m.DateAdded</td>
+                            <td>@m.AdminUserId</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

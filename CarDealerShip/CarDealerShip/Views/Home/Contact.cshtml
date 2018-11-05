@@ -1,0 +1,66 @@
+﻿@model CarDealerShip.Domain.Contact
+@{
+    ViewBag.Title = "Contact";
+}
+
+<div>
+    <h2>@ViewBag.Title</h2>
+</div>
+
+
+<div class="row">
+    @using (Html.BeginForm("Contact"))
+    {
+        <input type="hidden" name="CarId" value="@ViewBag.CarId" />
+        <div class="col-md-4">
+            <div>
+                <div>
+                    @Html.LabelFor(m => m.ContactName)
+                </div>
+                <div>
+                    @Html.TextBoxFor(m => m.ContactName)
+                </div>
+            </div>
+            <div>
+                <div>
+                    @Html.LabelFor(m => m.Email)
+                </div>
+                <div>
+                    @Html.TextBoxFor(m => m.Email)
+                </div>
+            </div>
+            <div>
+                <div>
+                    @Html.LabelFor(m => m.Phone)
+                </div>
+                <div>
+                    @Html.TextBoxFor(m => m.Phone)
+                </div>
+            </div>
+            <div>
+                <div>
+                    @Html.LabelFor(m => m.ContactMessage)
+                </div>
+                <div>
+                    @Html.TextAreaFor(m => m.ContactMessage, new { rows = "4", cols="30"})
+                </div>
+            </div>
+            <button>Submit</button>
+        </div>
+    }
+    <div class="col-md-8">
+        <div>
+            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJEdw_fZAys1IRmNKUDtwR5O8&key=AIzaSyByPlOmRFQkpQGDeabIy_VlBz09qVJi0Do" allowfullscreen></iframe>
+        </div>
+        <div>
+            15 S 5th St<br />
+            Minneapolis, MN 55402
+        </div>
+        <br />
+        <div>
+            Sales: 111-111-1111<br />
+            Service: 111-111-1112
+        </div>
+    </div>
+</div>
+

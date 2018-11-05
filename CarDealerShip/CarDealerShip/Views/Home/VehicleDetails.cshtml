@@ -1,0 +1,62 @@
+﻿@model CarDealerShip.Domain.Queries.CarDetails
+@{
+    ViewBag.Title = "VehicleDetails";
+}
+
+<div class="row">
+    <h2>Vehicle Details</h2>
+</div>
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-3">
+            <strong>@Model.BuildYear @Model.MakeName @Model.ModelName</strong>
+            <p><img src="/Images/@Model.PictureUrl" width="128" height="128" /></p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Body Style:</strong> @Model.BodyStyle</p>
+            <p><strong>Trans:</strong> @Model.Transmission</p>
+            <p><strong>Color:</strong> @Model.Color</p>
+            <p></p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Interior:</strong> @Model.Interior</p>
+            <p><strong>Mileage:</strong> @Model.Mileage</p>
+            <p><strong>VIN #:</strong> @Model.Vin</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Sale Price:</strong> @Model.SalePrice</p>
+            <p><strong>MSRP:</strong> @Model.MSRP</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-9">
+            <strong>Description: </strong> @Model.CarDescription
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+            @if (Model.SaleId == null)
+            {
+
+                @Html.ActionLink("Contact Us", "Contact", "Home", new { id = Model.CarId }, new { @class = "btn btn-primary" });
+            }
+            else
+            {
+                <button disabled>Unavailable- Sold</button>
+            }
+
+
+            @*<a href="Contact/@Model.CarId" class="btn btn-primary">Contact Us</a>*@
+        </div>
+    </div>
+
+</div>

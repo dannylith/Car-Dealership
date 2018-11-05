@@ -1,0 +1,31 @@
+﻿@model List<CarDealerShip.Domain.Queries.CarDetails>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Big Huge Sale</h1>
+</div>
+<hr />
+<div class="row">
+    <h2>Featured Vehicles</h2>
+    @for (int i = 0; i<Model.Count(); i++)
+    {
+        if (i > 0 && i % 12 == 0)
+        {
+        @:</div><div class="row">
+        }
+        <div class="col-md-4">
+            <img src="/Images/@(Model[i].PictureUrl)"alt="Car Image" width="128" height="128">
+            <br />
+            @Model[i].MakeName
+            @Model[i].ModelName
+            <br />
+            $@Model[i].SalePrice
+        </div>
+    }
+
+
+
+
+</div>

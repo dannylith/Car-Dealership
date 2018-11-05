@@ -1,0 +1,71 @@
+﻿@model CarDealerShip.Models.AdminInventoryReportVM
+@{
+    ViewBag.Title = "InventoryReport";
+}
+
+
+<div class="row">
+    <h2>Inventory Report</h2>
+</div>
+<br />
+
+
+<div class="row">
+    <h3>New Vehicles</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Count</th>
+                <th>Stock Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.NewInventoryReports)
+            {
+                <tr>
+                    <td>@c.Year</td>
+                    <td>@c.Make</td>
+                    <td>@c.Model</td>
+                    <td>@c.Count</td>
+                    <td>@c.StockValue</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<br />
+<div class="row">
+    <h3>Used Vehicles</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Count</th>
+                <th>Stock Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.UsedInventoryReports)
+            {
+                <tr>
+                    <td>@c.Year</td>
+                    <td>@c.Make</td>
+                    <td>@c.Model</td>
+                    <td>@c.Count</td>
+                    <td>@c.StockValue</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+

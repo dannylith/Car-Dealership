@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Sales</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <form id="searchForm" class="form-inline">
+            <div class="form-group">
+                <label for="quickSearch">Quick Search</label>
+                <input type="text" class="form-control" id="quickSearch" placeholder="Enter make, model or year">
+            </div>
+            <div class="form-group">
+                <label for="MinPrice">Min Price</label>
+                @Html.DropDownList("minPrice", new List<SelectListItem> {
+               new SelectListItem { Text = "1000", Value = "1000" },
+               new SelectListItem{Text = "5000", Value="5000"},
+               new SelectListItem { Text = "10000", Value = "10000"},
+               new SelectListItem{ Text = "20000", Value = "20000"} }
+           , "No Min", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="MinPrice">Max Price</label>
+                @Html.DropDownList("maxPrice", new List<SelectListItem> {
+               new SelectListItem { Text = "20000", Value = "20000" },
+               new SelectListItem{ Text = "30000", Value = "30000"},
+               new SelectListItem{ Text = "40000", Value = "40000"},
+               new SelectListItem{ Text = "50000", Value = "50000"} },
+               "No Max", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="MinYear">Min Year</label>
+                @Html.DropDownList("minYear", new List<SelectListItem> {
+               new SelectListItem { Text = "1990", Value = "1990" },
+               new SelectListItem { Text = "2000", Value = "2000" },
+               new SelectListItem { Text = "2016", Value = "2016" }},
+               "No Min", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="Max Year">Max Year</label>
+                @Html.DropDownList("maxYear", new List<SelectListItem> {
+               new SelectListItem { Text = "2005", Value="2005" },
+               new SelectListItem { Text = "2010", Value = "2010" },
+               new SelectListItem { Text = "2018", Value = "2018" }},
+               "No Max", new { @class = "form-control" })
+            </div>
+
+            <button id="btnSearch" class="btn btn-default">Search</button>
+        </form>
+    </div>
+</div>
+<hr />
+<h2>Search Results</h2>
+<hr />
+<div id="searchResults" class="row">
+
+    <a href="VehicleDetails/"></a>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (e) {
+                search();
+                return false;
+            });
+        });
+
+
+        function search() {
+            var params;
+
+            params = 'quickSearch=' + $('#quickSearch').val() + '&minPrice=' + $('#minPrice').val() + '&maxPrice=' + $('#maxPrice').val() + '&minYear=' +
+                $('#minYear').val() + '&maxYear=' + $('#maxYear').val() + '&carType=';
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:57862/search?' + params,
+                success: function (results) {
+                    $('#searchResults').empty();
+                    console.log(results);
+
+                    $.each(results, function (index, Car) {
+                        var button;
+
+                        var html = '<div class="row">' +
+                            '<div class="col-md-3"><strong>' + Car.BuildYear + " " + Car.MakeName + " " + Car.ModelName + '</strong><p><img src="/Images/' + Car.PictureUrl+'" alt="Car Image" width="128" height="128"></p></div>' +
+                            '<div class="col-md-3"><p><strong>Body Style:</strong> ' + Car.BodyStyle + '</p><p><strong>Trans</strong>: ' + Car.Transmission + '</p><p><strong>Color:</strong> ' + Car.Color + '</p></div>' +
+                            '<div class="col-md-3"><p><strong>Interior:</strong> ' + Car.Interior + '</p><p><strong>Mileage:</strong> ' + Car.Mileage + '</p><p><strong>VIN #:</strong> ' + Car.Vin + '</p></div>' +
+                            '<div class="col-md-3"><p><strong>Sale Price:</strong> ' + Car.SalePrice + '</p><p><strong>MSRP:</strong> ' + Car.MSRP + '</p><a href="/Sales/Purchase/' + Car.CarId + '" class="btn btn-primary">Purchase</a></div>' +
+                            '</div >' +
+                        '<br/><br/>';
+
+                        if (!(parseInt(Car.SaleId) > 0)) {
+                            $('#searchResults').append(html.toString());
+                        }
+                        
+                    });
+
+                },
+                error: function (error) {
+                    alert('Error performing search, try again later!')
+                    console.log(error)
+                }
+            });
+        }
+    </script>
+}
+

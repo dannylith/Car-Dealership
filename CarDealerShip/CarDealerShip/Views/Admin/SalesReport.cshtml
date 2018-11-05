@@ -1,0 +1,102 @@
+﻿@model List<CarDealerShip.Models.ApplicationUser>
+@{
+    ViewBag.Title = "SalesReport";
+}
+
+<div class="row">
+    <h2>Sales Report</h2>
+</div>
+<br />
+<div class="row">
+    <div class="row">
+        Filters
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            User: @Html.DropDownList("SalesUserId", Model.Select(item => new SelectListItem { Text = item.FirstName + " " + item.LastName, Value = item.Id }), "-All-", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            From Date <input class="form-control" type="date" id="FromDate" />
+        </div>
+        <div class="col-md-3">
+            To Date <input class="form-control" type="date" id="ToDate" />
+            
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary" onclick="search()">Search</button>
+        </div>
+        
+    </div>
+    <div class="row">
+        
+    </div>
+</div>
+
+
+<h2>Search Results</h2>
+<hr />
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>FullName</th>
+                <th>TotalSales</th>
+                <th>TotalVehicles</th>
+            </tr>
+        </thead>
+        <tbody id="searchResults"></tbody>
+
+    </table>
+
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (e) {
+                search();
+                return false;
+            });
+        });
+
+
+        function search() {
+
+            var params = {
+                SalesUserId: $('#SalesUserId').val(),
+                FromDate: new Date($('#FromDate').val()),
+                ToDate: new Date($('#ToDate').val())
+            };
+
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:57862/search/sales',
+                data: JSON.stringify(params),
+                contentType: "application/json",
+                success: function (results) {
+                    $('#searchResults').empty();
+                    console.log(results);
+
+                    $.each(results, function (index, sale) {
+                        var html = '<tr>'
+                            + '<td>' + sale.FullName + '</td>'
+                            + '<td>' + sale.TotalSales + '</td>'
+                            + '<td>' + sale.TotalVehicles + '</td>'
+                            + '<tr>'
+
+                        $('#searchResults').append(html.toString());
+                    });
+
+                },
+                error: function (error) {
+                    alert('Error performing search, try again later!')
+                    console.log(error)
+                }
+            });
+        }
+    </script>
+}

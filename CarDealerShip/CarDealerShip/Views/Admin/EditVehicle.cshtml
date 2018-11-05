@@ -1,0 +1,166 @@
+﻿@model CarDealerShip.Models.AdminEditCarVM
+@{
+    ViewBag.Title = "EditVehicle";
+}
+
+<div class="row">
+    <h2>Edit Vehicle</h2>
+</div>
+<br />
+
+@using (Html.BeginForm("EditVehicle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    <div class="row">
+        @Html.HiddenFor(m=>m.Car.CarId)
+        @Html.ValidationSummary()
+        <div class="col-md-4">
+            <label>Make</label>
+            @Html.DropDownList("Make", (List<SelectListItem>)ViewBag.AllMake, new { @class = "form-control", id = "makeName" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.ModelId)
+            @Html.DropDownListFor(m => m.Car.ModelId, (List<SelectListItem>)ViewBag.AllModelsByMake, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.CarType)
+            @Html.DropDownListFor(m => m.Car.CarType, new List<SelectListItem> {
+                   new SelectListItem { Text = "New", Value="New" },
+                   new SelectListItem { Text = "Used", Value = "Used" } },
+                    new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.BodyStyle)
+            @Html.DropDownListFor(m => m.Car.BodyStyle, new List<SelectListItem> {
+                   new SelectListItem { Text = "Car", Value="Car" },
+                   new SelectListItem { Text = "SUV", Value = "SUV" },
+                   new SelectListItem { Text = "Truck", Value = "Truck" },
+                   new SelectListItem { Text = "Van", Value = "Van" } },
+                    new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.BuildYear)
+            @Html.TextBoxFor(m => m.Car.BuildYear, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.Transmission)
+            @Html.DropDownListFor(m => m.Car.Transmission, new List<SelectListItem> {
+                   new SelectListItem { Text = "Automatic", Value="Automatic" },
+                   new SelectListItem { Text = "Manual", Value = "Manual" } },
+                    new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.Color)
+            @Html.DropDownListFor(m => m.Car.Color, new List<SelectListItem> {
+                   new SelectListItem { Text = "Black", Value="Black" },
+                   new SelectListItem { Text = "Red", Value = "Red" },
+                   new SelectListItem { Text = "Blue", Value="Blue" },
+                   new SelectListItem { Text = "Silver", Value = "Silver" },
+                   new SelectListItem { Text = "White", Value = "White" }},
+                    new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.Interior)
+            @Html.DropDownListFor(m => m.Car.Interior, new List<SelectListItem> {
+                   new SelectListItem { Text = "Black", Value="Black" },
+                   new SelectListItem { Text = "Red", Value = "Red" },
+                   new SelectListItem { Text = "Blue", Value="Blue" },
+                   new SelectListItem { Text = "Silver", Value = "Silver" },
+                   new SelectListItem { Text = "White", Value = "White" }},
+                    new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.Mileage)
+            @Html.TextBoxFor(m => m.Car.Mileage, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.Vin)
+            @Html.TextBoxFor(m => m.Car.Vin, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.MSRP)
+            @Html.TextBoxFor(m => m.Car.MSRP, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(m => m.Car.SalePrice)
+            @Html.TextBoxFor(m => m.Car.SalePrice, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            @Html.LabelFor(m => m.Car.CarDescription)
+            @Html.TextAreaFor(m => m.Car.CarDescription, new { rows = 8, @class = "form-control", style = "min-width: 90%" })
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Url.Content("~/Images/" + Model.Car.PictureUrl)" width="128" height="128" /><br />
+            @Html.LabelFor(m => m.Car.PictureUrl)
+            <input id="ImageUpload" name="ImageUpload" type="file" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.CheckBoxFor(m => m.Car.IsFeatured)
+            @Html.LabelFor(m => m.Car.IsFeatured, "Feature this vehicle")
+        </div>
+    </div>
+    @Html.ActionLink("Delete", "DeleteCar", new {id = Model.Car.CarId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete this item?')" })
+    @*<button class="btn btn-danger" type="button">Delete</button>*@
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+        });
+
+        $('#makeName').change(function () {
+
+
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:57862/search/make?makeName=' + $('#makeName').val(),
+                success: function (results) {
+                    $('#Car_ModelId').empty();
+                    console.log(results);
+
+                    $.each(results, function (index, model) {
+                        var html = '<option value =' + model.ModelId + '>' + model.ModelName + '</option>';
+                        $('#Car_ModelId').append(html.toString());
+                    });
+
+                },
+                error: function (error) {
+                    alert('Error performing search, try again later!')
+                    console.log(error)
+                }
+            });
+        });
+
+
+    </script>
+}
+

@@ -1,0 +1,24 @@
+﻿@model List<CarDealerShip.Domain.Special>
+@{
+    ViewBag.Title = "Specials";
+}
+
+<div class="row">
+    <h2>Specials</h2>
+    <hr />
+</div>
+
+@foreach (var s in Model)
+{
+    <div class="row">
+        <div class="col-md-2">
+            <img src="http://www.printable-alphabets.com/wp-content/uploads/2012/12/print-dollar-sign-large.png" width="128" height="128" />
+        </div>
+        <div class="col-md-10">
+            <strong><p>@s.SpecialTitle</p></strong>
+            <br />
+            <p>@s.SpecialDesc</p>
+        </div>
+    </div>
+    <br />
+}
